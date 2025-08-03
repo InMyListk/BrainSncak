@@ -10,8 +10,12 @@
 
 import type * as ResendOTP from "../ResendOTP.js";
 import type * as auth from "../auth.js";
+import type * as crons from "../crons.js";
+import type * as generateInformations from "../generateInformations.js";
 import type * as http from "../http.js";
-import type * as myFunctions from "../myFunctions.js";
+import type * as onboarding from "../onboarding.js";
+import type * as sendingSnacks from "../sendingSnacks.js";
+import type * as userProfiles from "../userProfiles.js";
 
 import type {
   ApiFromModules,
@@ -30,8 +34,12 @@ import type {
 declare const fullApi: ApiFromModules<{
   ResendOTP: typeof ResendOTP;
   auth: typeof auth;
+  crons: typeof crons;
+  generateInformations: typeof generateInformations;
   http: typeof http;
-  myFunctions: typeof myFunctions;
+  onboarding: typeof onboarding;
+  sendingSnacks: typeof sendingSnacks;
+  userProfiles: typeof userProfiles;
 }>;
 declare const fullApiWithMounts: typeof fullApi;
 

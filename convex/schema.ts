@@ -8,27 +8,17 @@ import { authTables } from "@convex-dev/auth/server";
 export default defineSchema({
   ...authTables,
 
-  // users: defineTable({
-  //   email: v.string(),
-  //   preferences: v.array(v.string()),
-  //   snackStyle: v.union(
-  //     v.literal("fun"),
-  //     v.literal("educational"),
-  //     v.literal("question"),
-  //     v.literal("surprise")
-  //   ),
-  //   snackSchedule: v.object({
-  //     frequency: v.union(
-  //       v.literal("daily"),
-  //       v.literal("weekdays"),
-  //       v.literal("manual")
-  //     ),
-  //     timeOfDay: v.union(
-  //       v.literal("morning"),
-  //       v.literal("noon"),
-  //       v.literal("evening")
-  //     ),
-  //   }),
-  //   createdAt: v.number(),
-  // }),
+  userProfiles: defineTable({
+    email: v.string(),
+    preferences: v.array(v.string()),
+    snackStyle: v.union(
+      v.literal("fun"),
+      v.literal("educational"),
+      v.literal("question"),
+      v.literal("surprise")
+    ),
+    subscription: v.boolean(),
+    language: v.string(),
+    createdAt: v.number(),
+  }),
 });
