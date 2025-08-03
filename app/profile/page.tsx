@@ -44,7 +44,6 @@ export default function ProfilePage() {
       // console.log(updatedProfile.preferences, profile.preferences)
       await updateUserProfile({
         email: profile.email,
-        name: updatedProfile.name ?? profile.name,
         preferences: updatedProfile.preferences ?? profile.preferences,
         snackStyle: updatedProfile.snackStyle ?? profile.snackStyle,
         language: updatedProfile.language ?? profile.language,
