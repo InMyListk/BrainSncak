@@ -24,7 +24,6 @@ export const getUserProfile = query({
 export const updateUserProfile = mutation({
     args: {
         email: v.string(),
-        name: v.string(),
         preferences: v.array(v.string()),
         snackStyle: v.union(
             v.literal("fun"),
