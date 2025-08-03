@@ -34,7 +34,6 @@ type Props = {
     error?: string;
 };
 
-
 export default function AuthDialog({
     step,
     flow,
@@ -108,10 +107,10 @@ export default function AuthDialog({
                         {flow === "forgot"
                             ? "Reset Your Password"
                             : isObjectStep
-                                ? "Verify Your Email"
-                                : step === "signUp"
-                                    ? "Create Your Account"
-                                    : "Sign In to your account"}
+                            ? "Verify Your Email"
+                            : step === "signUp"
+                            ? "Create Your Account"
+                            : "Sign In to your account"}
                     </DialogTitle>
                 </DialogHeader>
 
@@ -173,7 +172,7 @@ export default function AuthDialog({
                     // Email Verification
                     <form onSubmit={handleOtpVerification} className="space-y-6">
                         <div className="text-center space-y-2">
-                            <p className="text-sm text-gray-600">We've sent a verification code to</p>
+                            <p className="text-sm text-gray-600">We&apos;ve sent a verification code to</p>
                             <p className="font-medium">{formData.email}</p>
                         </div>
                         <div className="space-y-2">
@@ -213,7 +212,7 @@ export default function AuthDialog({
                                 className="text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
                                 onClick={() => alert("Resend code functionality would go here")}
                             >
-                                Didn't receive the code? Resend
+                                Didn&apos;t receive the code? Resend
                             </Button>
                         </div>
                     </form>
@@ -305,7 +304,7 @@ export default function AuthDialog({
                                 </>
                             ) : (
                                 <>
-                                    <span>Don't have an account? </span>
+                                    <span>Don&apos;t have an account? </span>
                                     <button
                                         type="button"
                                         className="text-pink-600 underline font-semibold cursor-pointer"

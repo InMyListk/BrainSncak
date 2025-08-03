@@ -37,7 +37,6 @@ export function MultiSelect({
     const handleUnselect = React.useCallback(
         (item: string) => {
             onChange(selected.filter((s) => s !== item))
-            // Also remove from custom tags if it's a custom tag
             if (item.startsWith("custom_") && onCustomTagsChange) {
                 onCustomTagsChange(customTags.filter((tag) => tag.id !== item))
             }
@@ -55,7 +54,6 @@ export function MultiSelect({
                         const removedItem = newSelected.pop()
                         if (removedItem) {
                             onChange(newSelected)
-                            // Remove from custom tags if it was a custom tag
                             if (removedItem.startsWith("custom_") && onCustomTagsChange) {
                                 onCustomTagsChange(customTags.filter((tag) => tag.id !== removedItem))
                             }
@@ -65,15 +63,10 @@ export function MultiSelect({
                 if (e.key === "Enter" && allowCustom && inputValue.trim()) {
                     e.preventDefault()
                     const trimmedValue = inputValue.trim()
-
-                    // Check length limit
                     if (trimmedValue.length > maxTagLength) {
                         return
                     }
-
                     const customTagId = `custom_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-
-                    // Check if it's not already selected and not in predefined options
                     if (
                         !selected.includes(customTagId) &&
                         !options.some((opt) => opt.label.toLowerCase() === trimmedValue.toLowerCase())
@@ -99,11 +92,8 @@ export function MultiSelect({
     const getDisplayLabel = (item: string) => {
         const option = options.find((opt) => opt.value === item)
         if (option) return option.label
-
-        // Check if it's a custom tag
         const customTag = customTags.find((tag) => tag.id === item)
         if (customTag) return customTag.label
-
         return item
     }
 
@@ -115,7 +105,6 @@ export function MultiSelect({
     const isCustomTag = (item: string) => item.startsWith("custom_")
 
     const handleInputChange = (value: string) => {
-        // Limit input length
         if (value.length <= maxTagLength) {
             setInputValue(value)
         }
@@ -178,25 +167,23 @@ export function MultiSelect({
                     <div className="absolute w-full z-10 top-0 rounded-md border bg-popover text-popover-foreground shadow-md outline-none animate-in">
                         <CommandList>
                             <CommandGroup className="h-full overflow-auto">
-                                {selectables.map((option) => {
-                                    return (
-                                        <CommandItem
-                                            key={option.value}
-                                            onMouseDown={(e) => {
-                                                e.preventDefault()
-                                                e.stopPropagation()
-                                            }}
-                                            onSelect={(value) => {
-                                                setInputValue("")
-                                                onChange([...selected, option.value])
-                                            }}
-                                            className={"cursor-pointer"}
-                                        >
-                                            {option.icon && <span className="mr-2">{option.icon}</span>}
-                                            {option.label}
-                                        </CommandItem>
-                                    )
-                                })}
+                                {selectables.map((option) => (
+                                    <CommandItem
+                                        key={option.value}
+                                        onMouseDown={(e) => {
+                                            e.preventDefault()
+                                            e.stopPropagation()
+                                        }}
+                                        onSelect={() => {
+                                            setInputValue("")
+                                            onChange([...selected, option.value])
+                                        }}
+                                        className="cursor-pointer"
+                                    >
+                                        {option.icon && <span className="mr-2">{option.icon}</span>}
+                                        {option.label}
+                                    </CommandItem>
+                                ))}
                                 {allowCustom &&
                                     inputValue.trim() &&
                                     inputValue.trim().length <= maxTagLength &&
@@ -220,7 +207,7 @@ export function MultiSelect({
                                             className="cursor-pointer text-orange-600"
                                         >
                                             <Plus className="mr-2 h-4 w-4" />
-                                            Create "{inputValue.trim()}" ({inputValue.length}/{maxTagLength})
+                                            Create &quot;{inputValue.trim()}&quot; ({inputValue.length}/{maxTagLength})
                                         </CommandItem>
                                     )}
                                 {allowCustom && inputValue.trim().length > maxTagLength && (
