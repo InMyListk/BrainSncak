@@ -3,9 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Sparkles, ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Loader, Star } from "lucide-react";
 import Header from "./header";
-import { useConvexAuth, useMutation } from "convex/react";
+import { useAction, useConvexAuth, useMutation, useQuery } from "convex/react";
 import { useRef, useState } from "react";
 import Features from "./features";
 import HowWorks from "./how-works";
@@ -15,16 +15,20 @@ import AuthDialog from "@/components/authUI/authDialog";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useRouter } from "next/navigation";
 import { api } from "@/convex/_generated/api";
+import AboutUs from "./aboutus";
 
 export default function LandingPage() {
   const { signIn } = useAuthActions();
+  const userInfo = useQuery(api.auth.getUserInfo);
   const { isAuthenticated, isLoading: isloadingAuth } = useConvexAuth();
   const updateUserInfo = useMutation(api.auth.updateUserInfo);
+  const sendSnackEmail = useAction(api.sendingSnacks.sendSnackEmailForUser);
   const [step, setStep] = useState<"signIn" | "signUp" | "forgot" | { email: string, name?: string }>("signUp");
   const [flow, setFlow] = useState<"signIn" | "signUp" | "forgot">("signUp");
   const [error, setError] = useState<string>("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [snackLoading, setSnackLoading] = useState(false);
   const [otpValue, setOtpValue] = useState("");
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const router = useRouter();
@@ -135,6 +139,22 @@ export default function LandingPage() {
     setIsLoading(false);
   };
 
+  const handleSendSnack = async () => {
+    try {
+      const email = userInfo?.email;
+      if (!email) {
+        alert("Please enter your email address.");
+        return;
+      }
+      await sendSnackEmail({ email });
+
+      alert("Snack email sent successfully!");
+    } catch (error) {
+      console.error("Error sending snack email:", error);
+      alert("Failed to send snack email. Please try again later.");
+    }
+  };
+
   if (isloadingAuth) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
@@ -149,7 +169,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center">
             <Badge className="mb-6 bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700 border-purple-200">
-              <Sparkles className="mr-1 h-3 w-3" />
+              <Star className="text-purple-600 h-5 w-5" />
               AI-Powered Learning
             </Badge>
             <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-6xl md:text-7xl">
@@ -194,6 +214,29 @@ export default function LandingPage() {
                 Unsubscribe anytime
               </div>
             </div>
+            {isAuthenticated && (
+              <div className="mt-8 flex justify-center">
+                <Button
+                  onClick={async () => {
+                    setSnackLoading(true);
+                    await handleSendSnack();
+                    setSnackLoading(false);
+                  }}
+                  disabled={snackLoading}
+                  className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-6 py-3 text-lg font-semibold rounded-xl shadow-md transition-all duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {snackLoading ? (
+                    <div className="flex items-center gap-2">
+                      <Loader className="h-5 w-5 animate-spin" />
+                      Sending...
+                    </div>
+                  ) : (
+                    <>⭐ Send Me a BrainSnack</>
+                  )}
+                </Button>
+              </div>
+            )}
+
           </div>
         </div>
         <div className="absolute top-20 left-10 hidden lg:block">
@@ -206,6 +249,7 @@ export default function LandingPage() {
       <Features />
       <HowWorks />
       <Socia />
+      <AboutUs/>
       {!isAuthenticated && (
         <section className="py-20 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500">
           <div className="container mx-auto px-4">
