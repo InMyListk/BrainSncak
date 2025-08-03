@@ -205,16 +205,6 @@ export default function AuthDialog({
                         >
                             {isLoading ? "Verifying..." : "Verify Email"}
                         </Button>
-                        <div className="text-center">
-                            <Button
-                                type="button"
-                                variant="ghost"
-                                className="text-sm text-gray-500 hover:text-gray-700 cursor-pointer"
-                                onClick={() => alert("Resend code functionality would go here")}
-                            >
-                                Didn&apos;t receive the code? Resend
-                            </Button>
-                        </div>
                     </form>
                 ) : (
                     // Sign In / Sign Up
