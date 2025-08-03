@@ -23,34 +23,18 @@ export default function Footer() {
                         <h3 className="font-semibold mb-4">Product</h3>
                         <ul className="space-y-2 text-sm text-gray-400">
                             <li>
-                                <Link href="#" className="hover:text-white transition-colors">
+                                <Link href="#features" className="hover:text-white transition-colors">
                                     Features
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className="hover:text-white transition-colors">
+                                <Link href="#how-it-works" className="hover:text-white transition-colors">
                                     How it Works
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className="hover:text-white transition-colors">
-                                    Topics
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h3 className="font-semibold mb-4">Company</h3>
-                        <ul className="space-y-2 text-sm text-gray-400">
-                            <li>
-                                <Link href="#" className="hover:text-white transition-colors">
+                                <Link href="#about" className="hover:text-white transition-colors">
                                     About
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="hover:text-white transition-colors">
-                                    Contact
                                 </Link>
                             </li>
                         </ul>
