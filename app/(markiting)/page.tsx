@@ -75,9 +75,11 @@ export default function LandingPage() {
 
       await signIn("password", data);
       setStep({ email: values.email });
-    } catch (error: any) {
-      console.log("Sign up error:", error.message);
-      setError(getFriendlyErrorMessage(error.message));
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("Sign up error:", error.message);
+        setError(getFriendlyErrorMessage(error.message));
+      }
     } finally {
       setIsLoading(false);
     }
@@ -91,9 +93,11 @@ export default function LandingPage() {
     try {
       await signIn("password", data);
       setIsDialogOpen(false);
-    } catch (error: any) {
-      console.log("Sign in error:", error.message);
-      setError(getFriendlyErrorMessage(error.message));
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("Sign in error:", error.message);
+        setError(getFriendlyErrorMessage(error.message));
+      }
     } finally {
       setIsLoading(false);
     }
@@ -115,9 +119,11 @@ export default function LandingPage() {
       await updateUserInfo({ name: formData.name });
 
       router.push("/onboarding");
-    } catch (error: any) {
-      console.log("OTP verification error:", error.message);
-      setError(getFriendlyErrorMessage(error.message));
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log("OTP verification error:", error.message);
+        setError(getFriendlyErrorMessage(error.message));
+      }
     } finally {
       setIsLoading(false);
     }

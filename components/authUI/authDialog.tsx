@@ -68,9 +68,11 @@ export default function AuthDialog({
             setIsLoading(true);
             setLocalError(undefined);
             await handler(formDataObj);
-        } catch (err: any) {
-            console.log("Error:", err);
-            setLocalError(err?.message || "Something went wrong");
+        } catch (error) {
+            if (error instanceof Error) {
+                console.log("Error:", error);
+                setLocalError(error.message || "Something went wrong");
+            }
         } finally {
             setIsLoading(false);
         }
