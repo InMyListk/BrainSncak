@@ -3,7 +3,6 @@ import {
   createRouteMatcher,
   nextjsMiddlewareRedirect,
 } from "@convex-dev/auth/nextjs/server";
-import { getUserInfo } from "./convex/auth";
 
 // const isSignInPage = createRouteMatcher(["/signin"]);
 // const isProtectedRoute = createRouteMatcher(["/", "/server"]);
